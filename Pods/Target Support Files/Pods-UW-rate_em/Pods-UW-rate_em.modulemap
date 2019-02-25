@@ -1,0 +1,6 @@
+framework module Pods_UW_rate_em {
+  umbrella header "Pods-UW-rate_em-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,15 +7,41 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var landingVC: UIViewController!
+    var name : String = ""
+    var email: String = ""
+    var isAuthenticated = false
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        FirebaseApp.configure()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor =  UIColor(red:0.87, green:0.09, blue:0.09, alpha:1.0)
+        
+        
+        if Auth.auth().currentUser != nil {
+            landingVC = MainVC()
+            self.name = Auth.auth().currentUser?.displayName ?? "default"
+            self.email = Auth.auth().currentUser?.email ?? "default"
+            self.isAuthenticated = true
+        }
+        else {
+            self.landingVC = LoginVC()
+            self.isAuthenticated = false
+        }
+        
+        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = landingVC
+        
+        
         return true
     }
 
